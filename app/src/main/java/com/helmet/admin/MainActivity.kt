@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.toolbar).apply {
             setNavigationIcon(android.R.drawable.ic_lock_power_off)
             setNavigationOnClickListener { logout() }
-            title = "安全帽管理"
+            title = "安全帽移动管理中心"
         }
         tvUserInfo.text = "${ApiService.username} · ${levelLabel()}"
 
