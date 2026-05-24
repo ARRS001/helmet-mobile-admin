@@ -15,6 +15,13 @@ android {
         versionName "1.0.0"
     }
 
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def date = new Date().format("yyyyMMdd")
+            output.outputFileName = "helmet-mobile-admin-v${versionName}-${date}.apk"
+        }
+    }
+
     buildFeatures {
         viewBinding true
     }
