@@ -47,8 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     val r = ApiService.login(username, password)
                     if (r.code == 0) {
-                        ApiService.saveServerUrl(this@LoginActivity)
-                        prefs.edit().putString("username", username).putString("server_url", ApiService.serverBase).apply()
+                        prefs.edit().putString("username", username).putString("server_url", serverUrl).apply()
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     } else {
