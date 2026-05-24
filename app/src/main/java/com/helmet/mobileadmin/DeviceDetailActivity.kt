@@ -1,4 +1,4 @@
-package com.helmet.admin
+package com.helmet.mobileadmin
 
 import android.os.Bundle
 import android.view.View
@@ -157,7 +157,7 @@ class DeviceDetailActivity : AppCompatActivity() {
                                 if (pr.code == 0) {
                                     val url = pr.data?.get("url") as? String ?: ""
                                     if (url.isNotEmpty()) {
-                                        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://111.230.72.98$url"))
+                                        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("${ApiService.serverBase}$url"))
                                         startActivity(intent)
                                     }
                                 }
@@ -198,7 +198,7 @@ class DeviceDetailActivity : AppCompatActivity() {
                         text = "查看"; textSize = 11f; setTextColor(0xFF5b9cf5.toInt()); setPadding(8, 0, 0, 0)
                         setOnClickListener {
                             val filename = s["filename"] as? String ?: return@setOnClickListener
-                            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://111.230.72.98/api/screenshots/$deviceId/$filename"))
+                            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("${ApiService.serverBase}/api/screenshots/$deviceId/$filename"))
                             startActivity(intent)
                         }
                     })

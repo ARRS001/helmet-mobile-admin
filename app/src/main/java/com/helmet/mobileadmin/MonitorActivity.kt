@@ -1,4 +1,4 @@
-package com.helmet.admin
+package com.helmet.mobileadmin
 
 import android.net.Uri
 import android.os.Bundle
@@ -32,7 +32,7 @@ class MonitorActivity : AppCompatActivity() {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f
             )
-            val hlsUrl = "https://dbase.honeyselect.asia/live/$deviceId/hls.m3u8"
+            val hlsUrl = "${ApiService.serverBase}/live/$deviceId/hls.m3u8"
             setVideoURI(Uri.parse(hlsUrl))
             setOnPreparedListener { it.start() }
             setOnErrorListener { _, _, _ ->

@@ -8,7 +8,7 @@
         android:allowBackup="false"
         android:icon="@android:drawable/ic_menu_manage"
         android:label="安全帽移动管理中心"
-        android:theme="@style/Theme.HelmetAdmin"
+        android:theme="@style/Theme.HelmetMobileAdmin"
         android:networkSecurityConfig="@xml/network_security_config">
 
         <activity android:name=".LoginActivity" android:exported="true"

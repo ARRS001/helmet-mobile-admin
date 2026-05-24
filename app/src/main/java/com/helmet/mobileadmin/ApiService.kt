@@ -1,4 +1,4 @@
-package com.helmet.admin
+package com.helmet.mobileadmin
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -11,16 +11,44 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 object ApiService {
-    private const val BASE = "https://111.230.72.98"
-    private val client = OkHttpClient.Builder()
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
-        .retryOnConnectionFailure(true)
-        .connectionPool(okhttp3.ConnectionPool(2, 30, TimeUnit.SECONDS))
-        .hostnameVerifier { hostname, _ -> hostname == "111.230.72.98" || hostname == "dbase.honeyselect.asia" }
-        .build()
+    var serverBase: String = ""
+        private set
+    private var _client: OkHttpClient? = null
+    private var _clientHost: String? = null
+    private val client: OkHttpClient
+        get() {
+            val host = serverBase.removePrefix("https://").removePrefix("http://").removeSuffix("/")
+            if (_client == null || _clientHost != host) {
+                _client = OkHttpClient.Builder()
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(15, TimeUnit.SECONDS)
+                    .retryOnConnectionFailure(true)
+                    .connectionPool(ConnectionPool(2, 30, TimeUnit.SECONDS))
+                    .hostnameVerifier { hn, _ -> hn == host }
+                    .build()
+                _clientHost = host
+            }
+            return _client!!
+        }
     private val gson = Gson()
     private val JSON = "application/json; charset=utf-8".toMediaType()
+
+    fun configure(serverUrl: String) {
+        serverBase = serverUrl.trim().removeSuffix("/")
+        if (!serverBase.startsWith("http")) serverBase = "https://$serverBase"
+        _client = null // force rebuild
+    }
+
+    fun loadServerUrl(context: android.content.Context): String {
+        serverBase = context.getSharedPreferences("admin_prefs", android.content.Context.MODE_PRIVATE)
+            .getString("server_url", "") ?: ""
+        return serverBase
+    }
+
+    fun saveServerUrl(context: android.content.Context) {
+        context.getSharedPreferences("admin_prefs", android.content.Context.MODE_PRIVATE)
+            .edit().putString("server_url", serverBase).apply()
+    }
 
     var authToken: String = ""
     var adminId: String = ""
@@ -33,7 +61,7 @@ object ApiService {
     suspend fun request(method: String, path: String, body: Any? = null, useAuth: Boolean = true): ApiResult {
         return withContext(Dispatchers.IO) {
             try {
-                val builder = Request.Builder().url("$BASE$path")
+                val builder = Request.Builder().url("$serverBase$path")
                 if (useAuth && authToken.isNotEmpty()) {
                     builder.addHeader("Authorization", "Bearer $authToken")
                 }

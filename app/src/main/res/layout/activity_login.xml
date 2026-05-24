@@ -15,6 +15,16 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etServerUrl" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:hint="服务器地址"
+            android:singleLine="true" android:inputType="textUri"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etUsername" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:hint="用户名"
             android:singleLine="true" android:inputType="text"/>

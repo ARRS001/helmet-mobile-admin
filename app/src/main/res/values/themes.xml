@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.HelmetAdmin" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.HelmetMobileAdmin" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">#1B2A4A</item>
         <item name="colorPrimaryVariant">#0F1A30</item>
         <item name="colorOnPrimary">#FFFFFF</item>
